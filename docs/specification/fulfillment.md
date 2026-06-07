@@ -21,8 +21,10 @@
 The fulfillment extension enables businesses to advertise support for physical
 goods fulfillment (shipping, pickup, etc).
 
-This extension adds a `fulfillment` field to Checkout containing:
+This extension adds fulfillment fields to Checkout:
 
+* `fulfillment_context` — session-level context used before method options are
+    computed, such as a store already chosen by the buyer
 * `methods[]` — fulfillment methods applicable to cart items (shipping, pickup, etc.)
     * `line_item_ids` — which items this method fulfills
     * `destinations[]` — where to fulfill (address, store location)
@@ -87,6 +89,10 @@ method.
 #### Fulfillment Available Method
 
 {{ schema_fields('types/fulfillment_available_method_resp', 'fulfillment') }}
+
+#### Fulfillment Context
+
+{{ schema_fields('types/fulfillment_context_resp', 'fulfillment') }}
 
 #### Total
 
@@ -280,6 +286,37 @@ If the buyer chooses pickup but the platform doesn't support split
 fulfillment, the platform **SHOULD** use `continue_url` to hand off to the
 business's checkout.
 
+## Store-Anchored Checkout
+
+Catalog and location discovery can use `context.geo`, `location_filter`, and
+`signals["dev.ucp.shopping.geo"]` to find nearby options. These fields are
+discovery signals; they are not checkout selections.
+
+When a buyer has already chosen a store or other buyer-visible location before
+checkout options are computed, the platform MAY send
+`fulfillment_context.location_id` on checkout create or update. This anchors the
+session without transmitting buyer geo. The business resolves that identifier
+to the relevant destinations and options in the checkout response.
+
+`selected_destination_id` remains method-level: it selects a destination from a
+specific `methods[].destinations[]` array after the business has returned
+options. It does not replace the session-level anchor.
+
+## Pickup, Curbside, and Local Delivery
+
+UCP defines `curbside` and `local_delivery` as protocol-blessed method types
+alongside `shipping` and `pickup`.
+
+Businesses SHOULD use:
+
+* `pickup` for buyer collection inside or at a designated pickup point
+* `curbside` for buyer collection at a location with an arrival or handoff flow
+* `local_delivery` for delivery from local inventory to a buyer destination
+
+Fulfillment options MAY include `pickup_window`, `delivery_window`,
+`hold_duration`, `order_cutoff_time`, `minimum_order_quantity`, and
+`depends_on_eligibility` to describe buyer-visible constraints.
+
 ## Configuration
 
 Businesses and platforms declare fulfillment constraints in their profiles.
@@ -377,16 +414,22 @@ shipping+pickup.
 
 ### Adding New Methods
 
-Extensions that extend fulfillment with new method types (e.g.,
-`local_delivery`) **MUST** add an extension schema that:
+UCP distinguishes two paths for new fulfillment method types:
 
-1. Adds the method to the `type` enum in `fulfillment_method`
-2. Adds corresponding business config options:
-    * `allows_multi_destination.local_delivery: boolean`
-    * `allows_method_combinations` items enum (includes `"local_delivery"`)
+1. **Protocol-blessed methods** are universal, buyer-facing primitives added to
+    the base `fulfillment_method.type` enum through the RFC process and a
+    coordinated `dev.ucp.shopping.fulfillment` capability version bump.
+2. **Vendor-defined methods** are retailer- or category-specific variants that
+    do not warrant protocol-wide blessing. These MUST be added via extension
+    schemas with reverse-domain-named values, such as
+    `com.example.drone_delivery`.
 
-Note: Platform's `supports_multi_group` is method-agnostic (single boolean),
-so no extension needed.
+Protocol-blessed methods SHOULD be promoted only when they have distinct buyer
+UX, distinct operational semantics, and broad applicability across multiple
+businesses and platforms. When in doubt, propose a vendor-defined method first.
+
+Platform `supports_multi_group` remains method-agnostic, so new method types do
+not require a platform config field by default.
 
 ## Examples
 

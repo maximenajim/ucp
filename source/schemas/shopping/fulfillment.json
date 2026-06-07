@@ -17,6 +17,9 @@
     "fulfillment_available_method": {
       "$ref": "types/fulfillment_available_method.json"
     },
+    "fulfillment_context": {
+      "$ref": "types/fulfillment_context.json"
+    },
     "fulfillment": {
       "$ref": "types/fulfillment.json"
     },
@@ -33,6 +36,15 @@
             "fulfillment": {
               "$ref": "#/$defs/fulfillment",
               "description": "Fulfillment details.",
+              "ucp_request": {
+                "create": "optional",
+                "update": "optional",
+                "complete": "omit"
+              }
+            },
+            "fulfillment_context": {
+              "$ref": "#/$defs/fulfillment_context",
+              "description": "Session-level fulfillment context used before method options are computed.",
               "ucp_request": {
                 "create": "optional",
                 "update": "optional",

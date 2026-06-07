@@ -77,15 +77,23 @@ Expectations can be split, merged, or adjusted post-order. For example:
 * Use a single expectation with a wide date range for flexibility
 * The goal is **setting buyer expectations** - for the best buyer experience
 
+The `destination` field is a fulfillment destination. Shipping expectations use
+a shipping destination; pickup and curbside expectations use a buyer-visible
+retail location.
+
 #### Fulfillment Events
 
-**Fulfillment Events** are an append-only log tracking physical shipments:
+**Fulfillment Events** are an append-only log tracking fulfillment progress:
 
 * Reference line items by ID and quantity
-* Include tracking information
+* Include carrier tracking information when the event is carrier-tracked
 * Type is an open string field - businesses can use any values that make sense
   (common examples: `processing`, `shipped`, `in_transit`, `delivered`,
-  `failed_attempt`, `canceled`, `undeliverable`, `returned_to_sender`)
+  `failed_attempt`, `canceled`, `undeliverable`, `returned_to_sender`,
+  `ready_for_pickup`, `arrived`, `picked_up`, `out_for_local_delivery`,
+  `hold_expiring`, `hold_expired`, `arrived_at_store`)
+
+Vendor-defined fulfillment event values MUST use reverse-domain naming.
 
 ### Attribution
 
@@ -151,14 +159,20 @@ split, merged, or adjusted post-order.
 
 ### Fulfillment Event
 
-Events are append-only records tracking actual shipments. The `type` field is
-an open string - businesses can use any values that make sense for their
-fulfillment process.
+Events are append-only records tracking actual fulfillment progress. The `type`
+field is an open string - businesses can use any values that make sense for
+their fulfillment process.
 
 {{ schema_fields('fulfillment_event', 'order') }}
 
 Examples: `processing`, `shipped`, `in_transit`, `delivered`, `failed_attempt`,
-`canceled`, `undeliverable`, `returned_to_sender`, etc.
+`canceled`, `undeliverable`, `returned_to_sender`, `ready_for_pickup`,
+`arrived`, `picked_up`, `out_for_local_delivery`, `hold_expiring`,
+`hold_expired`, `arrived_at_store`, etc.
+
+`tracking_number` and `tracking_url` are required only for carrier-tracked
+shipment events where the business has those values. They are not required for
+pickup or curbside lifecycle events.
 
 ### Adjustment
 
