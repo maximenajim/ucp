@@ -117,6 +117,13 @@
         }
       }
     },
+    "fulfillment_methods": {
+      "type": "array",
+      "description": "Method-first fulfillment availability for this variant in catalog responses. Catalog expresses possibilities and recommendations, not checkout selections.",
+      "items": {
+        "$ref": "catalog_fulfillment_method.json"
+      }
+    },
     "options": {
       "type": "array",
       "items": {

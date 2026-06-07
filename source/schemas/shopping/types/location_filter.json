@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ucp.dev/schemas/shopping/types/location_filter.json",
+  "title": "Location Filter",
+  "description": "Location constraints and preferences for location-aware catalog and store-finder requests. Catalog filters are advisory unless explicitly documented as constraints by the operation.",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "location_ids": {
+      "type": "array",
+      "description": "Business-defined location identifiers to constrain or prioritize the response.",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "preferred_location_id": {
+      "type": "string",
+      "description": "Business-defined location identifier to prefer when ranking results. This is a ranking hint, not a required selection."
+    },
+    "geo": {
+      "type": "object",
+      "description": "Buyer-granted location coordinates for proximity filtering or ranking.",
+      "required": ["latitude", "longitude"],
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Latitude in decimal degrees (WGS 84)."
+        },
+        "longitude": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180,
+          "description": "Longitude in decimal degrees (WGS 84)."
+        }
+      }
+    },
+    "postal_code": {
+      "type": "string",
+      "description": "Postal code used for proximity filtering or ranking when precise coordinates are unavailable."
+    },
+    "radius": {
+      "type": "object",
+      "description": "Maximum distance from geo or postal_code.",
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Distance value."
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["mi", "km"],
+          "description": "Distance unit."
+        }
+      }
+    },
+    "method_types": {
+      "type": "array",
+      "description": "Fulfillment method types the caller is interested in. PRs that add protocol-blessed method types extend this enum.",
+      "items": {
+        "type": "string",
+        "enum": ["shipping", "pickup"]
+      },
+      "uniqueItems": true
+    },
+    "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Requested maximum number of locations or destinations to return."
+    }
+  }
+}

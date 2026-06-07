@@ -99,6 +99,17 @@ Filters apply *after* identifier resolution (lookup) or option selection
 all fall outside the price filter results in that product being excluded
 from the response.
 
+### Location Filter
+
+Both lookup operations MAY accept `location_filter` to request method-first,
+location-aware availability for returned variants. Catalog responses express
+availability as constraints and recommendations, not checkout selections.
+
+When a business discloses destination-level availability, variants MAY include
+`fulfillment_methods[]` with location-bound `destinations[]`. When destination
+availability is not disclosed, the business can return an availability summary
+for the method without enumerating stores.
+
 ### Request
 
 {{ extension_schema_fields('catalog_lookup.json#/$defs/lookup_request', 'catalog') }}

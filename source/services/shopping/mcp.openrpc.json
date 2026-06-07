@@ -43,6 +43,12 @@
           { "$ref": "../../schemas/common/types/error_response.json" }
         ]
       },
+      "locations_result": {
+        "oneOf": [
+          { "$ref": "../../schemas/shopping/locations.json#/$defs/locations_response" },
+          { "$ref": "../../schemas/common/types/error_response.json" }
+        ]
+      },
       "meta": {
         "type": "object",
         "description": "Request metadata.",
@@ -344,6 +350,27 @@
       "result": {
         "name": "order",
         "schema": {"$ref": "#/components/schemas/order_result"}
+      }
+    },
+    {
+      "name": "search_locations",
+      "summary": "Search locations",
+      "description": "Search buyer-visible business locations. Per-variant availability is returned by catalog operations.",
+      "params": [
+        {
+          "name": "meta",
+          "required": true,
+          "schema": {"$ref": "#/components/schemas/meta"}
+        },
+        {
+          "name": "locations",
+          "required": true,
+          "schema": {"$ref": "../../schemas/shopping/locations.json#/$defs/locations_request"}
+        }
+      ],
+      "result": {
+        "name": "response",
+        "schema": {"$ref": "#/components/schemas/locations_result"}
       }
     },
     {

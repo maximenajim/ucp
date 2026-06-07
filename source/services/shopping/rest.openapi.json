@@ -649,6 +649,50 @@
         }
       }
     },
+    "/locations/search": {
+      "post": {
+        "operationId": "search_locations",
+        "summary": "Search Locations",
+        "description": "Search buyer-visible business locations. Per-variant availability is returned by catalog operations, not this location discovery operation.",
+        "parameters": [
+          { "$ref": "#/components/parameters/authorization" },
+          { "$ref": "#/components/parameters/x_api_key" },
+          { "$ref": "#/components/parameters/signature" },
+          { "$ref": "#/components/parameters/signature_input" },
+          { "$ref": "#/components/parameters/content_digest" },
+          { "$ref": "#/components/parameters/request_id" },
+          { "$ref": "#/components/parameters/user_agent" },
+          { "$ref": "#/components/parameters/ucp_agent" },
+          { "$ref": "#/components/parameters/content_type" },
+          { "$ref": "#/components/parameters/accept" },
+          { "$ref": "#/components/parameters/accept_language" },
+          { "$ref": "#/components/parameters/accept_encoding" }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/locations_request" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Location search results",
+            "headers": {
+              "Signature": { "$ref": "#/components/headers/signature" },
+              "Signature-Input": { "$ref": "#/components/headers/signature_input" },
+              "Content-Digest": { "$ref": "#/components/headers/content_digest" }
+            },
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/locations_response" }
+              }
+            }
+          }
+        }
+      }
+    },
     "/orders/{id}": {
       "parameters": [
         { "$ref": "#/components/parameters/order_id_path" }
@@ -1014,6 +1058,15 @@
       "catalog_get_product_response": {
         "oneOf": [
           { "$ref": "../../schemas/shopping/catalog_lookup.json#/$defs/get_product_response" },
+          { "$ref": "../../schemas/common/types/error_response.json" }
+        ]
+      },
+      "locations_request": {
+        "$ref": "../../schemas/shopping/locations.json#/$defs/locations_request"
+      },
+      "locations_response": {
+        "oneOf": [
+          { "$ref": "../../schemas/shopping/locations.json#/$defs/locations_response" },
           { "$ref": "../../schemas/common/types/error_response.json" }
         ]
       }

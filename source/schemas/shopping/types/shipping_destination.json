@@ -16,6 +16,10 @@
           "type": "string",
           "description": "ID specific to this shipping destination.",
           "ucp_request": "optional"
+        },
+        "destination_type": {
+          "const": "shipping_destination",
+          "description": "Discriminator used when shipping destinations appear in polymorphic fulfillment destination lists."
         }
       },
       "required": [

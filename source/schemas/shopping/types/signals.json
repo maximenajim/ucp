@@ -16,6 +16,31 @@
     "dev.ucp.user_agent": {
       "type": "string",
       "description": "Client's HTTP User-Agent header or equivalent."
+    },
+    "dev.ucp.shopping.geo": {
+      "type": "object",
+      "description": "Platform-derived coarse geo signal for proximity ranking when buyer-granted precise geo is unavailable. Platforms MUST NOT use this for confirmed checkout store selection.",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "longitude": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "accuracy": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Approximate accuracy radius in meters."
+        },
+        "source": {
+          "type": "string",
+          "description": "Source of the coarse geo signal. Well-known values: ip, device_region, platform_profile."
+        }
+      }
     }
   },
   "additionalProperties": true

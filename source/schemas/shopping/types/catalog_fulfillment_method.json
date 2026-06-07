@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ucp.dev/schemas/shopping/types/catalog_fulfillment_method.json",
+  "title": "Catalog Fulfillment Method",
+  "description": "Method-first availability for a product variant in catalog responses. Catalog expresses possibilities and recommendations, not checkout selections.",
+  "type": "object",
+  "required": ["type", "availability"],
+  "additionalProperties": true,
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["shipping", "pickup"],
+      "description": "Fulfillment method type. PRs that add protocol-blessed method types extend this enum."
+    },
+    "availability": {
+      "$ref": "availability_summary.json",
+      "description": "Availability summary for this method under the applied catalog context."
+    },
+    "description": {
+      "type": "string",
+      "description": "Buyer-facing summary, such as 'Pickup available today at Downtown Store'."
+    },
+    "destinations": {
+      "type": "array",
+      "description": "Buyer-visible destinations for location-bound methods. Shipping methods SHOULD omit destinations unless the destination is buyer-provided and visible.",
+      "items": { "$ref": "destination_availability.json" }
+    }
+  }
+}

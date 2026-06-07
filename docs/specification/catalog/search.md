@@ -61,6 +61,21 @@ merchants MAY support additional custom filters via `additionalProperties`.
 
 {{ schema_fields('types/price_filter', 'catalog') }}
 
+## Location-Aware Search
+
+Catalog search MAY accept `location_filter` to rank or constrain results using
+buyer-visible location context. Search remains product-centric: businesses return
+products and variants, and variants MAY include method-first
+`fulfillment_methods[]` entries that describe whether the product can be
+received by shipping, pickup, or other negotiated methods.
+
+Location-bound methods MAY include buyer-visible `destinations[]`. Businesses
+that do not disclose destination-level inventory can omit `destinations[]` and
+return an `availability` summary instead.
+
+For location-centric discovery, such as finding nearby stores regardless of a
+specific product, use the `dev.ucp.shopping.locations` capability.
+
 ## Pagination
 
 Cursor-based pagination for list operations. Cursors are opaque strings
