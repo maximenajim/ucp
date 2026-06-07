@@ -44,6 +44,10 @@
       },
       "description": "Which line items and quantities are fulfilled in this event."
     },
+    "origin": {
+      "$ref": "fulfillment_origin.json",
+      "description": "Fulfillment origin for this event, when disclosed by the business."
+    },
     "tracking_number": {
       "type": "string",
       "description": "Carrier tracking number. Required only for carrier-tracked shipment events where a tracking number exists."

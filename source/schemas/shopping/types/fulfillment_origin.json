@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ucp.dev/schemas/shopping/types/fulfillment_origin.json",
+  "title": "Fulfillment Origin",
+  "description": "Fulfillment origin, either buyer-visible or internal. Internal origins structurally cannot carry rendered fields.",
+  "oneOf": [
+    {
+      "$ref": "customer_visible_origin.json"
+    },
+    {
+      "$ref": "internal_origin.json"
+    }
+  ]
+}

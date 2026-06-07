@@ -17,6 +17,12 @@
     "fulfillment_available_method": {
       "$ref": "types/fulfillment_available_method.json"
     },
+    "fulfillment_origin": {
+      "$ref": "types/fulfillment_origin.json"
+    },
+    "line_item_reference": {
+      "$ref": "types/line_item_reference.json"
+    },
     "fulfillment_context": {
       "$ref": "types/fulfillment_context.json"
     },

@@ -43,6 +43,11 @@
       "type": "boolean",
       "default": false,
       "description": "Whether the business discloses destination-level availability in catalog responses. Defaults to false: businesses opt in to disclosure. When false, businesses MUST NOT return per-destination availability and MAY still return availability_summary without destinations. Platforms MUST NOT infer availability from the presence or absence of destinations in catalog responses."
+    },
+    "discloses_origin": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the business may disclose fulfillment origins. When false, origin and transfer_origin SHOULD be omitted."
     }
   }
 }
