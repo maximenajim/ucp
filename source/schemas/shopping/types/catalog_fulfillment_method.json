@@ -9,8 +9,8 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": ["shipping", "pickup"],
-      "description": "Fulfillment method type. PRs that add protocol-blessed method types extend this enum."
+      "enum": ["shipping", "pickup", "curbside", "local_delivery"],
+      "description": "Fulfillment method type. Capability version bumps may extend this enum with additional protocol-blessed method types."
     },
     "availability": {
       "$ref": "availability_summary.json",

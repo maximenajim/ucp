@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ucp.dev/schemas/shopping/types/fulfillment_context.json",
+  "title": "Fulfillment Context",
+  "description": "Session-level fulfillment context used before method options are computed. This is distinct from catalog geo discovery and from method-level selected_destination_id.",
+  "type": "object",
+  "ucp_shared_request": true,
+  "additionalProperties": true,
+  "properties": {
+    "location_id": {
+      "type": "string",
+      "description": "Business-defined buyer-visible location identifier anchoring this checkout session, such as a store chosen from a location finder.",
+      "ucp_request": "optional"
+    },
+    "method_types": {
+      "type": "array",
+      "description": "Fulfillment method types the buyer intends to use for this session.",
+      "items": {
+        "type": "string",
+        "enum": ["shipping", "pickup", "curbside", "local_delivery"]
+      },
+      "uniqueItems": true,
+      "ucp_request": "optional"
+    }
+  }
+}

@@ -10,7 +10,7 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": ["shipping", "pickup"],
+      "enum": ["shipping", "pickup", "curbside", "local_delivery"],
       "description": "Fulfillment method type this availability applies to.",
       "ucp_request": "omit"
     },

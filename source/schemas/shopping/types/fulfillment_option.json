@@ -40,6 +40,68 @@
       "description": "Latest fulfillment date.",
       "ucp_request": "omit"
     },
+    "pickup_window": {
+      "type": "object",
+      "description": "Time window during which a pickup or curbside order can be collected.",
+      "required": ["start_time", "end_time"],
+      "properties": {
+        "start_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start of the pickup window."
+        },
+        "end_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End of the pickup window."
+        }
+      },
+      "ucp_request": "omit"
+    },
+    "delivery_window": {
+      "type": "object",
+      "description": "Time window during which a local delivery order can be delivered.",
+      "required": ["start_time", "end_time"],
+      "properties": {
+        "start_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Start of the delivery window."
+        },
+        "end_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "End of the delivery window."
+        }
+      },
+      "ucp_request": "omit"
+    },
+    "hold_duration": {
+      "type": "string",
+      "description": "ISO 8601 duration for how long a pickup or curbside order will be held, such as P3D.",
+      "ucp_request": "omit"
+    },
+    "order_cutoff_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Latest time the buyer can choose this option and still receive the stated fulfillment window.",
+      "ucp_request": "omit"
+    },
+    "minimum_order_quantity": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Minimum item quantity required for this fulfillment option.",
+      "ucp_request": "omit"
+    },
+    "depends_on_eligibility": {
+      "type": "array",
+      "description": "Eligibility claims required for this option, such as a membership benefit. Values use reverse-domain names and correspond to context.eligibility claims.",
+      "items": {
+        "$ref": "../../common/types/reverse_domain_name.json"
+      },
+      "uniqueItems": true,
+      "ucp_request": "omit"
+    },
     "totals": {
       "type": "array",
       "items": {

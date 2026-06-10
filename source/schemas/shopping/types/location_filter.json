@@ -58,10 +58,10 @@
     },
     "method_types": {
       "type": "array",
-      "description": "Fulfillment method types the caller is interested in. PRs that add protocol-blessed method types extend this enum.",
+      "description": "Fulfillment method types the caller is interested in. Capability version bumps may extend this enum with additional protocol-blessed method types.",
       "items": {
         "type": "string",
-        "enum": ["shipping", "pickup"]
+        "enum": ["shipping", "pickup", "curbside", "local_delivery"]
       },
       "uniqueItems": true
     },
