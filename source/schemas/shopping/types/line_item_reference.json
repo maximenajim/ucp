@@ -11,7 +11,7 @@
     {
       "type": "object",
       "required": ["id", "quantity"],
-      "additionalProperties": true,
+      "additionalProperties": false,
       "properties": {
         "id": {
           "type": "string",
