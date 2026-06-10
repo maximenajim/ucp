@@ -10,6 +10,7 @@
     "method_type",
     "destination"
   ],
+  "additionalProperties": true,
   "properties": {
     "id": {
       "type": "string",
@@ -36,12 +37,12 @@
     },
     "method_type": {
       "type": "string",
-      "enum": ["shipping", "pickup", "digital"],
-      "description": "Delivery method type (shipping, pickup, digital)."
+      "enum": ["shipping", "pickup", "curbside", "local_delivery", "digital"],
+      "description": "Delivery method type."
     },
     "destination": {
-      "$ref": "../../common/types/postal_address.json",
-      "description": "Delivery destination address."
+      "$ref": "fulfillment_destination.json",
+      "description": "Buyer-visible fulfillment destination, discriminated by destination_type. Shipping and local delivery expectations use a postal address; pickup and curbside expectations use a retail location, locker, or pickup point. Payloads without destination_type remain valid and resolve as postal addresses, or as retail locations when id and name are present."
     },
     "description": {
       "type": "string",

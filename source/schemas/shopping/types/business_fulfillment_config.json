@@ -16,6 +16,14 @@
         "pickup": {
           "type": "boolean",
           "description": "Multiple pickup locations allowed."
+        },
+        "curbside": {
+          "type": "boolean",
+          "description": "Multiple curbside pickup locations allowed."
+        },
+        "local_delivery": {
+          "type": "boolean",
+          "description": "Multiple local delivery destinations allowed."
         }
       },
       "additionalProperties": false
@@ -27,7 +35,7 @@
         "type": "array",
         "items": {
           "type": "string",
-          "enum": ["shipping", "pickup"]
+          "enum": ["shipping", "pickup", "curbside", "local_delivery"]
         }
       }
     },

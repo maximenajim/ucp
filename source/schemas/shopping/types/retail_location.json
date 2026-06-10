@@ -87,7 +87,7 @@
       "description": "Fulfillment method types this location can support. This does not imply that a specific variant is available.",
       "items": {
         "type": "string",
-        "enum": ["shipping", "pickup"]
+        "enum": ["shipping", "pickup", "curbside", "local_delivery"]
       },
       "uniqueItems": true
     },

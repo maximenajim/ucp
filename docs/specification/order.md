@@ -77,15 +77,31 @@ Expectations can be split, merged, or adjusted post-order. For example:
 * Use a single expectation with a wide date range for flexibility
 * The goal is **setting buyer expectations** - for the best buyer experience
 
+The `destination` field is a fulfillment destination, discriminated by
+`destination_type` (`postal_address`, `retail_location`, `locker`, or
+`pickup_point`). Shipping and local delivery expectations use a postal address;
+pickup and curbside expectations use a retail location, locker, or pickup
+point.
+
+This change is additive. Destinations produced before the discriminator
+existed — bare postal addresses on shipping expectations — remain valid.
+Consumers SHOULD dispatch on `destination_type` when present, and otherwise
+treat the destination as a postal address (or as a retail location when `id`
+and `name` are present).
+
 #### Fulfillment Events
 
-**Fulfillment Events** are an append-only log tracking physical shipments:
+**Fulfillment Events** are an append-only log tracking fulfillment progress:
 
 * Reference line items by ID and quantity
-* Include tracking information
+* Include carrier tracking information when the event is carrier-tracked
 * Type is an open string field - businesses can use any values that make sense
   (common examples: `processing`, `shipped`, `in_transit`, `delivered`,
-  `failed_attempt`, `canceled`, `undeliverable`, `returned_to_sender`)
+  `failed_attempt`, `canceled`, `undeliverable`, `returned_to_sender`,
+  `ready_for_pickup`, `arrived`, `picked_up`, `out_for_local_delivery`,
+  `hold_expiring`, `hold_expired`, `arrived_at_store`)
+
+Vendor-defined fulfillment event values MUST use reverse-domain naming.
 
 ### Attribution
 
@@ -151,14 +167,20 @@ split, merged, or adjusted post-order.
 
 ### Fulfillment Event
 
-Events are append-only records tracking actual shipments. The `type` field is
-an open string - businesses can use any values that make sense for their
-fulfillment process.
+Events are append-only records tracking actual fulfillment progress. The `type`
+field is an open string - businesses can use any values that make sense for
+their fulfillment process.
 
 {{ schema_fields('fulfillment_event', 'order') }}
 
 Examples: `processing`, `shipped`, `in_transit`, `delivered`, `failed_attempt`,
-`canceled`, `undeliverable`, `returned_to_sender`, etc.
+`canceled`, `undeliverable`, `returned_to_sender`, `ready_for_pickup`,
+`arrived`, `picked_up`, `out_for_local_delivery`, `hold_expiring`,
+`hold_expired`, `arrived_at_store`, etc.
+
+`tracking_number` and `tracking_url` are required only for carrier-tracked
+shipment events where the business has those values. They are not required for
+pickup or curbside lifecycle events.
 
 ### Adjustment
 

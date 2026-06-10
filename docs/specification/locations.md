@@ -28,6 +28,11 @@ Product availability remains a catalog concern and is expressed through
 method-first `variant.fulfillment_methods[]` results on catalog search and
 lookup responses.
 
+The locations capability can report which fulfillment method types a location
+supports, such as `pickup`, `curbside`, or `local_delivery`, but that is
+location capability metadata only. It does not imply a specific variant is in
+stock at that location.
+
 ## Request
 
 {{ extension_schema_fields('locations.json#/$defs/locations_request', 'locations') }}
