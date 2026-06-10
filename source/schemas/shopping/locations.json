@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ucp.dev/schemas/shopping/locations.json",
+  "name": "dev.ucp.shopping.locations",
+  "title": "Locations",
+  "description": "Location discovery capability for buyer-visible retail locations. This capability returns locations only; per-variant availability is returned by catalog capabilities.",
+  "type": "object",
+  "$defs": {
+    "locations_request": {
+      "type": "object",
+      "properties": {
+        "context": {
+          "$ref": "types/context.json",
+          "description": "Buyer-provided context for localization and proximity."
+        },
+        "signals": {
+          "$ref": "types/signals.json",
+          "description": "Platform-derived signals such as coarse geo."
+        },
+        "location_filter": {
+          "$ref": "types/location_filter.json",
+          "description": "Location constraints and ranking preferences."
+        },
+        "pagination": {
+          "$ref": "../common/types/pagination.json#/$defs/request"
+        }
+      }
+    },
+    "locations_response": {
+      "type": "object",
+      "required": ["ucp", "locations"],
+      "properties": {
+        "ucp": {
+          "$ref": "../ucp.json#/$defs/response_catalog_schema"
+        },
+        "locations": {
+          "type": "array",
+          "description": "Buyer-visible locations matching the request.",
+          "items": { "$ref": "types/retail_location.json" }
+        },
+        "pagination": {
+          "$ref": "../common/types/pagination.json#/$defs/response"
+        },
+        "messages": {
+          "type": "array",
+          "items": { "$ref": "../common/types/message.json" },
+          "description": "Errors, warnings, or informational messages about the location results."
+        }
+      }
+    }
+  }
+}

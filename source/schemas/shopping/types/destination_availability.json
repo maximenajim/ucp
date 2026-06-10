@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ucp.dev/schemas/shopping/types/destination_availability.json",
+  "title": "Destination Availability",
+  "description": "A buyer-visible fulfillment destination with availability for the parent catalog fulfillment method at that destination. Composes on fulfillment_destination; catalog destinations MUST carry destination_type.",
+  "type": "object",
+  "allOf": [
+    { "$ref": "fulfillment_destination.json" },
+    {
+      "type": "object",
+      "required": ["destination_type"],
+      "properties": {
+        "availability": {
+          "$ref": "availability_summary.json",
+          "description": "Availability at this destination."
+        },
+        "description": {
+          "type": "string",
+          "description": "Buyer-facing destination-specific availability detail."
+        }
+      }
+    }
+  ]
+}

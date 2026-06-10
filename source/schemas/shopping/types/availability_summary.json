@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ucp.dev/schemas/shopping/types/availability_summary.json",
+  "title": "Availability Summary",
+  "description": "Summary availability when detailed destination-level inventory is unavailable, undisclosed, or unnecessary.",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "available": {
+      "type": "boolean",
+      "description": "Whether the item or method is available under the applied context and filters."
+    },
+    "status": {
+      "type": "string",
+      "description": "Availability status. Well-known values: in_stock, limited_stock, backorder, preorder, out_of_stock, discontinued, unavailable, unknown."
+    },
+    "description": {
+      "type": "string",
+      "description": "Buyer-facing summary of the availability result."
+    },
+    "destination_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of buyer-visible destinations represented by this summary, when the business chooses to disclose it."
+    }
+  }
+}

@@ -8,6 +8,7 @@
   "$defs": {
     "search_request": {
       "type": "object",
+      "additionalProperties": true,
       "properties": {
         "query": {
           "type": "string",
@@ -25,6 +26,10 @@
         "filters": {
           "$ref": "types/search_filters.json"
         },
+        "location_filter": {
+          "$ref": "types/location_filter.json",
+          "description": "Optional location constraints or preferences for location-aware search."
+        },
         "pagination": {
           "$ref": "../common/types/pagination.json#/$defs/request"
         }
@@ -32,6 +37,7 @@
     },
     "search_response": {
       "type": "object",
+      "additionalProperties": true,
       "required": [
         "ucp",
         "products"

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ucp.dev/schemas/shopping/types/retail_location.json",
   "title": "Retail Location",
-  "description": "A pickup location (retail store, locker, etc.).",
+  "description": "A buyer-visible retail location, such as a store, locker, or pickup point.",
   "type": "object",
   "ucp_shared_request": true,
   "required": ["id", "name"],
@@ -20,6 +20,170 @@
     "address": {
       "$ref": "../../common/types/postal_address.json",
       "description": "Physical address of the location."
+    },
+    "geo": {
+      "type": "object",
+      "description": "Geographic coordinates for proximity search and map display.",
+      "required": ["latitude", "longitude"],
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Latitude in decimal degrees (WGS 84)."
+        },
+        "longitude": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180,
+          "description": "Longitude in decimal degrees (WGS 84)."
+        },
+        "geofence_radius": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Geofence radius in meters for arrival or proximity experiences."
+        }
+      }
+    },
+    "distance": {
+      "type": "object",
+      "description": "Distance from the buyer's requested or inferred location, when computed by the business.",
+      "required": ["value", "unit"],
+      "properties": {
+        "value": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Distance value."
+        },
+        "unit": {
+          "type": "string",
+          "enum": ["mi", "km"],
+          "description": "Distance unit."
+        }
+      }
+    },
+    "location_type": {
+      "type": "string",
+      "description": "Location type. Well-known values: store, locker, pickup_point, pop_up. Businesses MAY define additional values using reverse-domain naming."
+    },
+    "format": {
+      "type": "string",
+      "description": "Business-defined store format. Well-known values: superstore, express, outlet, standard, urban_small. Businesses MAY define additional values using reverse-domain naming."
+    },
+    "status": {
+      "type": "string",
+      "description": "Operational status. Well-known values: open, temporarily_closed, closed, coming_soon. Businesses MAY define additional values using reverse-domain naming."
+    },
+    "timezone": {
+      "type": "string",
+      "description": "IANA timezone identifier for this location, such as America/Toronto."
+    },
+    "phone": {
+      "type": "string",
+      "description": "Contact phone number for the location. E.164 format is recommended."
+    },
+    "fulfillment_capabilities": {
+      "type": "array",
+      "description": "Fulfillment method types this location can support. This does not imply that a specific variant is available.",
+      "items": {
+        "type": "string",
+        "enum": ["shipping", "pickup"]
+      },
+      "uniqueItems": true
+    },
+    "hours": {
+      "type": "array",
+      "description": "Regular weekly operating hours by day of week. Use exception_hours to override specific dates.",
+      "items": {
+        "type": "object",
+        "required": ["day"],
+        "properties": {
+          "day": {
+            "type": "string",
+            "enum": [
+              "monday",
+              "tuesday",
+              "wednesday",
+              "thursday",
+              "friday",
+              "saturday",
+              "sunday"
+            ]
+          },
+          "is_closed": {
+            "type": "boolean",
+            "description": "If true, the location is closed on this day. When true, intervals MUST be omitted."
+          },
+          "is_24_hours": {
+            "type": "boolean",
+            "description": "If true, the location is open 24 hours on this day. When true, intervals MUST be omitted."
+          },
+          "intervals": {
+            "type": "array",
+            "description": "One or more open intervals for this day. For overnight hours, use two entries across two days.",
+            "items": {
+              "type": "object",
+              "required": ["open", "close"],
+              "properties": {
+                "open": {
+                  "type": "string",
+                  "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$",
+                  "description": "Opening time in local HH:MM 24-hour format."
+                },
+                "close": {
+                  "type": "string",
+                  "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$",
+                  "description": "Closing time in local HH:MM 24-hour format."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "exception_hours": {
+      "type": "array",
+      "description": "Exception hours for specific dates, such as holidays, remodels, temporary closures, or special events. Entries override weekly hours for the given local date.",
+      "items": {
+        "type": "object",
+        "required": ["date"],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date in YYYY-MM-DD, local to the location's timezone."
+          },
+          "label": {
+            "type": "string",
+            "description": "Reason for the exception, such as Thanksgiving or Store Remodel."
+          },
+          "is_closed": {
+            "type": "boolean",
+            "description": "If true, the location is closed on this date."
+          },
+          "is_24_hours": {
+            "type": "boolean",
+            "description": "If true, the location is open 24 hours on this date."
+          },
+          "intervals": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["open", "close"],
+              "properties": {
+                "open": {
+                  "type": "string",
+                  "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                },
+                "close": {
+                  "type": "string",
+                  "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

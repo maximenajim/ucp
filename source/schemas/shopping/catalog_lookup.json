@@ -25,6 +25,7 @@
     },
     "lookup_request": {
       "type": "object",
+      "additionalProperties": true,
       "description": "Request body for catalog lookup.",
       "required": ["ids"],
       "properties": {
@@ -37,6 +38,10 @@
         "filters": {
           "$ref": "types/search_filters.json",
           "description": "Filter criteria to narrow returned products and variants. All specified filters combine with AND logic."
+        },
+        "location_filter": {
+          "$ref": "types/location_filter.json",
+          "description": "Optional location constraints or preferences for location-aware lookup."
         },
         "context": {
           "$ref": "types/context.json"
@@ -51,6 +56,7 @@
     },
     "lookup_response": {
       "type": "object",
+      "additionalProperties": true,
       "required": [
         "ucp",
         "products"
@@ -86,6 +92,7 @@
     },
     "get_product_request": {
       "type": "object",
+      "additionalProperties": true,
       "description": "Request body for single-product retrieval. Supports interactive variant narrowing via selected and preferences.",
       "required": ["id"],
       "properties": {
@@ -110,6 +117,10 @@
         "filters": {
           "$ref": "types/search_filters.json",
           "description": "Filter criteria to narrow returned variants. All specified filters combine with AND logic."
+        },
+        "location_filter": {
+          "$ref": "types/location_filter.json",
+          "description": "Optional location constraints or preferences for location-aware product detail."
         },
         "context": {
           "$ref": "types/context.json"
@@ -152,6 +163,7 @@
     },
     "get_product_response": {
       "type": "object",
+      "additionalProperties": true,
       "required": [
         "ucp",
         "product"
