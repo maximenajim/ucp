@@ -30,6 +30,11 @@
           "enum": ["shipping", "pickup"]
         }
       }
+    },
+    "discloses_location_availability": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the business may disclose buyer-visible destination-level availability in catalog responses. When false, platforms should expect availability_summary without destinations."
     }
   }
 }

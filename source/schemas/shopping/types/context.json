@@ -18,6 +18,34 @@
       "type": "string",
       "description": "The postal code. For example, 94043. Optional hint for regional refinement—higher-resolution data (e.g., shipping address) supersedes this value."
     },
+    "geo": {
+      "type": "object",
+      "description": "Buyer-granted precise location for proximity-based discovery. Platforms MUST only provide this field with buyer consent, MUST use it only for the current commerce task, and MUST prefer coarser location signals when precise location is not necessary.",
+      "required": ["latitude", "longitude"],
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Latitude in decimal degrees (WGS 84)."
+        },
+        "longitude": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180,
+          "description": "Longitude in decimal degrees (WGS 84)."
+        },
+        "accuracy": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Estimated accuracy radius in meters, when available."
+        }
+      }
+    },
+    "preferred_location_id": {
+      "type": "string",
+      "description": "Business-defined location identifier to prefer for ranking. This is a soft hint for discovery, not a checkout selection or session anchor."
+    },
     "intent": {
       "type": "string",
       "description": "Background context describing buyer's intent (e.g., 'looking for a gift under $50', 'need something durable for outdoor use'). Informs relevance, recommendations, and personalization."

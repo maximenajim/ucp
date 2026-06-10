@@ -38,6 +38,10 @@
           "$ref": "types/search_filters.json",
           "description": "Filter criteria to narrow returned products and variants. All specified filters combine with AND logic."
         },
+        "location_filter": {
+          "$ref": "types/location_filter.json",
+          "description": "Optional location constraints or preferences for location-aware lookup."
+        },
         "context": {
           "$ref": "types/context.json"
         },
@@ -110,6 +114,10 @@
         "filters": {
           "$ref": "types/search_filters.json",
           "description": "Filter criteria to narrow returned variants. All specified filters combine with AND logic."
+        },
+        "location_filter": {
+          "$ref": "types/location_filter.json",
+          "description": "Optional location constraints or preferences for location-aware product detail."
         },
         "context": {
           "$ref": "types/context.json"
