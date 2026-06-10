@@ -8,6 +8,7 @@
   "$defs": {
     "search_request": {
       "type": "object",
+      "additionalProperties": true,
       "properties": {
         "query": {
           "type": "string",
@@ -36,6 +37,7 @@
     },
     "search_response": {
       "type": "object",
+      "additionalProperties": true,
       "required": [
         "ucp",
         "products"

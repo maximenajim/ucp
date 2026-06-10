@@ -26,8 +26,16 @@
     },
     "destinations": {
       "type": "array",
-      "description": "Available destinations. For shipping: addresses. For pickup: retail locations.",
-      "items": { "$ref": "fulfillment_destination.json" }
+      "description": "Available destinations. For shipping: addresses. For pickup: retail locations. Destinations MUST carry an id so they can be referenced by selected_destination_id.",
+      "items": {
+        "allOf": [
+          { "$ref": "fulfillment_destination.json" },
+          {
+            "type": "object",
+            "required": ["id"]
+          }
+        ]
+      }
     },
     "selected_destination_id": {
       "type": ["string", "null"],

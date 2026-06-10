@@ -25,6 +25,7 @@
     },
     "lookup_request": {
       "type": "object",
+      "additionalProperties": true,
       "description": "Request body for catalog lookup.",
       "required": ["ids"],
       "properties": {
@@ -55,6 +56,7 @@
     },
     "lookup_response": {
       "type": "object",
+      "additionalProperties": true,
       "required": [
         "ucp",
         "products"
@@ -90,6 +92,7 @@
     },
     "get_product_request": {
       "type": "object",
+      "additionalProperties": true,
       "description": "Request body for single-product retrieval. Supports interactive variant narrowing via selected and preferences.",
       "required": ["id"],
       "properties": {
@@ -160,6 +163,7 @@
     },
     "get_product_response": {
       "type": "object",
+      "additionalProperties": true,
       "required": [
         "ucp",
         "product"

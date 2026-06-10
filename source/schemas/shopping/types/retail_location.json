@@ -13,10 +13,6 @@
       "description": "Unique location identifier.",
       "ucp_request": "omit"
     },
-    "destination_type": {
-      "const": "retail_location",
-      "description": "Discriminator used when retail locations appear in polymorphic fulfillment destination lists."
-    },
     "name": {
       "type": "string",
       "description": "Location name (e.g., store name)."

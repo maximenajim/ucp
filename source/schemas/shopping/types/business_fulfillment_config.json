@@ -33,8 +33,8 @@
     },
     "discloses_location_availability": {
       "type": "boolean",
-      "default": true,
-      "description": "Whether the business may disclose buyer-visible destination-level availability in catalog responses. When false, platforms should expect availability_summary without destinations."
+      "default": false,
+      "description": "Whether the business discloses destination-level availability in catalog responses. Defaults to false: businesses opt in to disclosure. When false, businesses MUST NOT return per-destination availability and MAY still return availability_summary without destinations. Platforms MUST NOT infer availability from the presence or absence of destinations in catalog responses."
     }
   }
 }
