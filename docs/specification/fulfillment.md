@@ -357,7 +357,14 @@ or `{id, quantity}` objects. String values mean the full line item quantity.
 Object values let a single line item split across methods, such as two units for
 pickup and three units for shipping.
 
+When the same line item ID appears in multiple methods as `{id, quantity}`
+entries, the quantities MUST sum to the line item's total quantity. Mixing the
+bare string form and the `{id, quantity}` form for the same line item ID is a
+protocol error: businesses MUST use one representation per line item.
+
 Businesses MAY disclose fulfillment origins when `discloses_origin` allows it.
+When `discloses_origin` is false, businesses MUST NOT include `origin` or
+`transfer_origin` on groups, expectations, or events.
 Origins are intentionally separated into:
 
 * `customer_visible_origin` for locations that may be rendered to the buyer

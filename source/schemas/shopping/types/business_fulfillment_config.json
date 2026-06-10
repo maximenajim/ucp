@@ -47,7 +47,7 @@
     "discloses_origin": {
       "type": "boolean",
       "default": false,
-      "description": "Whether the business may disclose fulfillment origins. When false, origin and transfer_origin SHOULD be omitted."
+      "description": "Whether the business discloses fulfillment origins. When false, businesses MUST NOT include origin or transfer_origin on groups, expectations, or events. Platforms SHOULD NOT render origins the business has not disclosed."
     }
   }
 }
