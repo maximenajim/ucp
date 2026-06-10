@@ -10,6 +10,7 @@
     "method_type",
     "destination"
   ],
+  "additionalProperties": true,
   "properties": {
     "id": {
       "type": "string",
@@ -41,7 +42,7 @@
     },
     "destination": {
       "$ref": "fulfillment_destination.json",
-      "description": "Buyer-visible fulfillment destination. Shipping expectations use a shipping destination; pickup and curbside expectations use a retail location."
+      "description": "Buyer-visible fulfillment destination, discriminated by destination_type. Shipping and local delivery expectations use a postal address; pickup and curbside expectations use a retail location, locker, or pickup point. Payloads without destination_type remain valid and resolve as postal addresses, or as retail locations when id and name are present."
     },
     "description": {
       "type": "string",

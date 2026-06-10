@@ -10,6 +10,7 @@
     "type",
     "line_items"
   ],
+  "additionalProperties": true,
   "properties": {
     "id": {
       "type": "string",

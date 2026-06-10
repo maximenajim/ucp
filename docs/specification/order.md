@@ -77,9 +77,17 @@ Expectations can be split, merged, or adjusted post-order. For example:
 * Use a single expectation with a wide date range for flexibility
 * The goal is **setting buyer expectations** - for the best buyer experience
 
-The `destination` field is a fulfillment destination. Shipping expectations use
-a shipping destination; pickup and curbside expectations use a buyer-visible
-retail location.
+The `destination` field is a fulfillment destination, discriminated by
+`destination_type` (`postal_address`, `retail_location`, `locker`, or
+`pickup_point`). Shipping and local delivery expectations use a postal address;
+pickup and curbside expectations use a retail location, locker, or pickup
+point.
+
+This change is additive. Destinations produced before the discriminator
+existed — bare postal addresses on shipping expectations — remain valid.
+Consumers SHOULD dispatch on `destination_type` when present, and otherwise
+treat the destination as a postal address (or as a retail location when `id`
+and `name` are present).
 
 #### Fulfillment Events
 
