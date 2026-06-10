@@ -94,6 +94,22 @@ method.
 
 {{ schema_fields('types/fulfillment_context_resp', 'fulfillment') }}
 
+#### Fulfillment Origin
+
+{{ schema_fields('types/fulfillment_origin_resp', 'fulfillment') }}
+
+#### Customer Visible Origin
+
+{{ schema_fields('types/customer_visible_origin_resp', 'fulfillment') }}
+
+#### Internal Origin
+
+{{ schema_fields('types/internal_origin_resp', 'fulfillment') }}
+
+#### Line Item Reference
+
+{{ schema_fields('types/line_item_reference_resp', 'fulfillment') }}
+
 #### Total
 
 {{ schema_fields('types/total_resp', 'fulfillment') }}
@@ -333,6 +349,28 @@ Fulfillment options MAY include `pickup_window`, `delivery_window`,
 `hold_duration`, `order_cutoff_time`, `minimum_order_quantity`, and
 `depends_on_eligibility` to describe buyer-visible constraints.
 
+## Split Quantities and Origins
+
+`methods[].line_item_ids[]`, `groups[].line_item_ids[]`, and
+`available_methods[].line_item_ids[]` accept either legacy string line item IDs
+or `{id, quantity}` objects. String values mean the full line item quantity.
+Object values let a single line item split across methods, such as two units for
+pickup and three units for shipping.
+
+Businesses MAY disclose fulfillment origins when `discloses_origin` allows it.
+Origins are intentionally separated into:
+
+* `customer_visible_origin` for locations that may be rendered to the buyer
+* `internal_origin` for routing nodes that must not expose address, name, or
+    rendered description fields
+
+When `origin` appears at multiple levels, the more specific value wins:
+`fulfillment_event.origin` overrides `expectation.origin`, which overrides
+`fulfillment_group.origin`.
+
+`transfer_origin` on a fulfillment group represents inventory transferred before
+buyer-visible fulfillment, such as ship-to-store pickup.
+
 ## Configuration
 
 Businesses and platforms declare fulfillment constraints in their profiles.
@@ -385,9 +423,9 @@ Opt-in declaration (business MAY return multiple groups per method):
 ### Business Profile
 
 Businesses declare what fulfillment configurations they support using
-`merchant_config`:
+`business_fulfillment_config`:
 
-{{ schema_fields('types/merchant_fulfillment_config', 'fulfillment') }}
+{{ schema_fields('types/business_fulfillment_config', 'fulfillment') }}
 
 <!-- ucp:example schema=profile def=business_schema target=$.ucp.capabilities -->
 ```json

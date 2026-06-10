@@ -16,8 +16,8 @@
     },
     "line_item_ids": {
       "type": "array",
-      "description": "Line items available for this fulfillment method.",
-      "items": { "type": "string" },
+      "description": "Line item IDs or line item quantity references available for this fulfillment method.",
+      "items": { "$ref": "line_item_reference.json" },
       "ucp_request": "omit"
     },
     "fulfillable_on": {

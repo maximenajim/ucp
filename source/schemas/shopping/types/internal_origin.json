@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ucp.dev/schemas/shopping/types/internal_origin.json",
+  "title": "Internal Origin",
+  "description": "Fulfillment origin that must not expose buyer-renderable topology. This type intentionally carries no address, name, or description fields.",
+  "type": "object",
+  "required": ["id", "visibility", "origin_type"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Opaque business-defined origin identifier."
+    },
+    "visibility": {
+      "const": "internal",
+      "description": "Indicates this origin is internal and must not be rendered as a buyer-visible place."
+    },
+    "origin_type": {
+      "type": "string",
+      "description": "Internal origin type. Well-known values: distribution_center, warehouse, dark_store, store."
+    }
+  }
+}

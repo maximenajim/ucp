@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ucp.dev/schemas/shopping/types/customer_visible_origin.json",
+  "title": "Customer Visible Origin",
+  "description": "Fulfillment origin that may be rendered to the buyer because it is customer visible, such as a retail store.",
+  "type": "object",
+  "required": ["id", "visibility", "origin_type"],
+  "additionalProperties": true,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Business-defined origin identifier."
+    },
+    "visibility": {
+      "const": "customer_visible",
+      "description": "Indicates this origin can be rendered to the buyer."
+    },
+    "origin_type": {
+      "type": "string",
+      "description": "Origin type. Well-known values: retail_location, store, locker, pickup_point. Businesses MAY define additional values using reverse-domain naming."
+    },
+    "location": {
+      "$ref": "retail_location.json",
+      "description": "Buyer-visible location details for this origin."
+    },
+    "description": {
+      "type": "string",
+      "description": "Buyer-facing description of the origin, such as 'Ships from your local store'."
+    }
+  }
+}

@@ -44,6 +44,10 @@
       "$ref": "fulfillment_destination.json",
       "description": "Buyer-visible fulfillment destination, discriminated by destination_type. Shipping and local delivery expectations use a postal address; pickup and curbside expectations use a retail location, locker, or pickup point. Payloads without destination_type remain valid and resolve as postal addresses, or as retail locations when id and name are present."
     },
+    "origin": {
+      "$ref": "fulfillment_origin.json",
+      "description": "Fulfillment origin for this expectation, when disclosed by the business."
+    },
     "description": {
       "type": "string",
       "description": "Human-readable delivery description (e.g., 'Arrives in 5-8 business days')."

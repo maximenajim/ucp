@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ucp.dev/schemas/shopping/types/line_item_reference.json",
+  "title": "Line Item Reference",
+  "description": "Reference to a line item, optionally scoped to a quantity. String values preserve the legacy whole-line-item form.",
+  "oneOf": [
+    {
+      "type": "string",
+      "description": "Legacy line item ID form. Applies to the full line item quantity."
+    },
+    {
+      "type": "object",
+      "required": ["id", "quantity"],
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Line item ID reference."
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Quantity of this line item assigned to the enclosing fulfillment method or group."
+        }
+      }
+    }
+  ]
+}
