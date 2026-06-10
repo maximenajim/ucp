@@ -47,18 +47,6 @@
           "description": "Errors, warnings, or informational messages about the location results."
         }
       }
-    },
-    "dev.ucp.shopping.locations": {
-      "platform_schema": {
-        "title": "Locations Capability (Platform)",
-        "description": "Platform-level locations capability declaration.",
-        "allOf": [{ "$ref": "../capability.json#/$defs/platform_schema" }]
-      },
-      "business_schema": {
-        "title": "Locations Capability (Business)",
-        "description": "Business-level locations capability declaration.",
-        "allOf": [{ "$ref": "../capability.json#/$defs/business_schema" }]
-      }
     }
   }
 }

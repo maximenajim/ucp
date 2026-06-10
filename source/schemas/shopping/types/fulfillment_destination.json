@@ -2,15 +2,87 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://ucp.dev/schemas/shopping/types/fulfillment_destination.json",
   "title": "Fulfillment Destination",
-  "description": "A destination for fulfillment.",
+  "description": "A buyer-visible fulfillment destination, discriminated by destination_type: a postal address (shipping, local delivery), a retail location (pickup, curbside), a locker, or a pickup point. Legacy payloads without destination_type remain valid: they resolve as a postal address, or as a retail location when id and name are present.",
   "type": "object",
   "ucp_shared_request": true,
   "oneOf": [
-    {
-      "$ref": "shipping_destination.json"
+    { "$ref": "#/$defs/postal_address_destination" },
+    { "$ref": "#/$defs/retail_location_destination" },
+    { "$ref": "#/$defs/locker_destination" },
+    { "$ref": "#/$defs/pickup_point_destination" }
+  ],
+  "$defs": {
+    "postal_address_destination": {
+      "title": "Postal Address Destination",
+      "description": "A postal address destination, used by shipping and local delivery. An object carrying a name is never a postal address destination; this keeps the arms of the oneOf disjoint for legacy payloads without destination_type.",
+      "allOf": [
+        { "$ref": "../../common/types/postal_address.json" },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "ID specific to this destination. Required at use sites that reference destinations by selected_destination_id.",
+              "ucp_request": "optional"
+            },
+            "destination_type": {
+              "const": "postal_address",
+              "description": "Discriminator for a postal address destination."
+            }
+          },
+          "not": { "required": ["name"] }
+        }
+      ]
     },
-    {
-      "$ref": "retail_location.json"
+    "retail_location_destination": {
+      "title": "Retail Location Destination",
+      "description": "A retail location destination, used by pickup and curbside. destination_type SHOULD be included; it is optional only for backward compatibility with payloads that predate the discriminator.",
+      "allOf": [
+        { "$ref": "retail_location.json" },
+        {
+          "type": "object",
+          "properties": {
+            "destination_type": {
+              "const": "retail_location",
+              "description": "Discriminator for a retail location destination."
+            }
+          }
+        }
+      ]
+    },
+    "locker_destination": {
+      "title": "Locker Destination",
+      "description": "A self-service locker destination for pickup. Shares the retail location structure; destination_type is required. When location_type is also present it SHOULD agree with destination_type.",
+      "allOf": [
+        { "$ref": "retail_location.json" },
+        {
+          "type": "object",
+          "required": ["destination_type"],
+          "properties": {
+            "destination_type": {
+              "const": "locker",
+              "description": "Discriminator for a locker destination."
+            }
+          }
+        }
+      ]
+    },
+    "pickup_point_destination": {
+      "title": "Pickup Point Destination",
+      "description": "A third-party pickup point destination, such as a service counter in a partner store. Shares the retail location structure; destination_type is required. When location_type is also present it SHOULD agree with destination_type.",
+      "allOf": [
+        { "$ref": "retail_location.json" },
+        {
+          "type": "object",
+          "required": ["destination_type"],
+          "properties": {
+            "destination_type": {
+              "const": "pickup_point",
+              "description": "Discriminator for a pickup point destination."
+            }
+          }
+        }
+      ]
     }
-  ]
+  }
 }
