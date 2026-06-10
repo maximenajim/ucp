@@ -89,6 +89,10 @@ Consumers SHOULD dispatch on `destination_type` when present, and otherwise
 treat the destination as a postal address (or as a retail location when `id`
 and `name` are present).
 
+Expectations MAY include `origin` when a business chooses to disclose where the
+expectation is fulfilled from. Customer-visible origins can be rendered to the
+buyer; internal origins are opaque routing references.
+
 #### Fulfillment Events
 
 **Fulfillment Events** are an append-only log tracking fulfillment progress:
@@ -102,6 +106,9 @@ and `name` are present).
   `hold_expiring`, `hold_expired`, `arrived_at_store`)
 
 Vendor-defined fulfillment event values MUST use reverse-domain naming.
+
+Events MAY include `origin` when a business chooses to disclose event-specific
+origin context. Event origin is more specific than expectation origin.
 
 ### Attribution
 

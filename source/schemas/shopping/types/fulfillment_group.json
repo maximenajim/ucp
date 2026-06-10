@@ -14,8 +14,18 @@
     },
     "line_item_ids": {
       "type": "array",
-      "description": "Line item IDs included in this group/package.",
-      "items": { "type": "string" },
+      "description": "Line item IDs or line item quantity references included in this group/package.",
+      "items": { "$ref": "line_item_reference.json" },
+      "ucp_request": "omit"
+    },
+    "origin": {
+      "$ref": "fulfillment_origin.json",
+      "description": "Fulfillment origin for this group/package, when disclosed by the business.",
+      "ucp_request": "omit"
+    },
+    "transfer_origin": {
+      "$ref": "fulfillment_origin.json",
+      "description": "Origin from which inventory is transferred before the buyer-visible fulfillment destination, such as ship-to-store pickup.",
       "ucp_request": "omit"
     },
     "options": {

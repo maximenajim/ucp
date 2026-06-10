@@ -20,8 +20,8 @@
     },
     "line_item_ids": {
       "type": "array",
-      "description": "Line item IDs fulfilled via this method.",
-      "items": { "type": "string" },
+      "description": "Line item IDs or line item quantity references fulfilled via this method.",
+      "items": { "$ref": "line_item_reference.json" },
       "ucp_request": {"create": "optional", "update": "required"}
     },
     "destinations": {
