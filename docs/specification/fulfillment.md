@@ -302,6 +302,22 @@ to the relevant destinations and options in the checkout response.
 specific `methods[].destinations[]` array after the business has returned
 options. It does not replace the session-level anchor.
 
+### Anchor Resolution Failures
+
+A business that cannot honor `fulfillment_context.location_id` — the identifier
+does not resolve, the location is closed or not operational, or nothing in the
+cart can be fulfilled there — MUST NOT fail checkout on that basis alone. The
+business SHOULD compute available methods as if the session were unanchored and
+SHOULD return a `message` of type `warning` identifying the unresolved anchor,
+so the platform can prompt the buyer to choose another store.
+
+When a later cart update invalidates a previously honored anchor (for example,
+an added item is not available at the anchored store), the business MUST clear
+`selected_option_id` on the affected groups, MUST update `available_methods` to
+reflect the current state, and SHOULD return a `warning` message explaining
+what changed. The platform SHOULD re-render fulfillment options and prompt the
+buyer to reselect.
+
 ## Pickup, Curbside, and Local Delivery
 
 UCP defines `curbside` and `local_delivery` as protocol-blessed method types
